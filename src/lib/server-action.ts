@@ -9,9 +9,10 @@ export const envelopeServerAction = async <T>(
     const response = await action();
     return { success: true, response };
   } catch (error) {
+    console.log("envelope error", error);
     return {
       success: false,
-      error: (error as Error).message,
+      error: (error as Error).message || "مشکلی در انجام عملیات رخ داده است",
     };
   }
 };

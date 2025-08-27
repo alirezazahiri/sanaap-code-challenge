@@ -34,10 +34,8 @@ export const UnauthorizedErrorStrategy: ApiErrorHandler = (errorData) => {
   } as UnauthorizedError;
 };
 
-export const NotFoundErrorStrategy: ApiErrorHandler = (errorData) => {
+export const NotFoundErrorStrategy = () => {
   throw {
-    title: errorData.message,
-    status: errorData.status_code,
     detail: "سرویس مورد نظر یافت نشد",
   } as NotFoundError;
 };

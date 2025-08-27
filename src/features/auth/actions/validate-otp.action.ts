@@ -13,15 +13,13 @@ import {
   ApiEndpointResponse,
 } from "@/routes/api-endpoints";
 
-export const createOtpAction: Action<PhoneNumberSchema> = async (
-  _model,
-  formData
-) => {
-  const op = "CREATE_OTP";
+export const validateOtpAction: Action<
+  PhoneNumberSchema,
+  { phone: string; code: string }
+> = async (_model, data) => {
+  const op = "VALIDATE_OTP";
 
-  console.log("createOtpAction", formData);
-
-  const phone = formData.get("phone") as string;
+  const { phone, code } = data;
 
   return await envelopeServerAction(async () => {
     const validatedResult = phoneNumberSchema.safeParse({ phone });
@@ -33,8 +31,9 @@ export const createOtpAction: Action<PhoneNumberSchema> = async (
     await POST<
       ApiEndpointRequestBody[typeof op],
       ApiEndpointResponse[typeof op]
-    >(API_ENDPOINTS.CREATE_OTP, {
+    >(API_ENDPOINTS.VALIDATE_OTP, {
       phone_number: phone,
+      code: code,
     });
 
     return {

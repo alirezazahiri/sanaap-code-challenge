@@ -10,16 +10,16 @@ export type UseActionMutationProps<T> = {
   onError?: (state: ServerActionState<T>, error: string) => void;
 };
 
-export type UseActionMutationReturn<T> = {
-  mutate: (payload: FormData) => void;
+export type UseActionMutationReturn<T, D = FormData> = {
+  mutate: (payload: D) => void;
   isPending: boolean;
   data: ServerActionState<T> | null;
 };
 
-export const useActionMutation = <T>(
-  action: Action<T>,
+export const useActionMutation = <T, D = FormData>(
+  action: Action<T, D>,
   { initialState, onSuccess, onError }: UseActionMutationProps<T> = {}
-): UseActionMutationReturn<T> => {
+): UseActionMutationReturn<T, D> => {
   const onSuccessRef = useCallbackRef(onSuccess);
   const onErrorRef = useCallbackRef(onError);
 
@@ -28,8 +28,10 @@ export const useActionMutation = <T>(
   const [isPending, startTransition] = useTransition();
 
   useEffect(() => {
+    console.log({formState, isPending});
     if (isPending) return;
 
+    console.log("formState", formState);
     if (formState && !formState.success && formState.error) {
       onErrorRef?.(formState, formState.error);
     } else if (formState && formState.success && formState.response) {
@@ -37,8 +39,10 @@ export const useActionMutation = <T>(
     }
   }, [isPending, formState, onErrorRef, onSuccessRef]);
 
-  const mutate = useCallbackRef((payload: FormData) => {
+  const mutate = useCallbackRef((payload: D) => {
+    console.log("mutate", payload);
     startTransition(async () => {
+      console.log("startTransition", payload);
       formAction(payload);
     });
   });

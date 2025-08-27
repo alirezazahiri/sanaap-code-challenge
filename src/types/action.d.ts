@@ -4,7 +4,7 @@ export type ServerActionState<T> = {
   error?: string;
 };
 
-export type Action<T> = (
+export type Action<T, D = FormData> = (
   data: ServerActionState<T> | null,
-  formData: FormData
+  payload: D
 ) => ServerActionState<T> | Promise<ServerActionState<T> | null> | null;

@@ -16,6 +16,7 @@ type TimerProps = {
   seconds: number;
   className?: string;
   onExpire?: () => void;
+  expiredClassName?: string;
 };
 
 export type TimerRef = {
@@ -24,7 +25,7 @@ export type TimerRef = {
 
 // TODO: add a way to style the timer if it's expired
 export const Timer = forwardRef<TimerRef, TimerProps>(
-  ({ seconds, className, onExpire }, ref) => {
+  ({ seconds, className, onExpire, expiredClassName }, ref) => {
     const [time, setTime] = useState(seconds);
     const isFinished = useRef(false);
 
@@ -57,7 +58,11 @@ export const Timer = forwardRef<TimerRef, TimerProps>(
       <Typography
         variant="body2"
         component="p"
-        className={clsx(classes.container, className)}
+        className={clsx(
+          classes.container,
+          className,
+          expiredClassName && time === 0 && expiredClassName
+        )}
       >
         {secondsToMMSS(time)}
       </Typography>

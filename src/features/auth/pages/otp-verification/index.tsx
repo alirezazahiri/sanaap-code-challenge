@@ -42,7 +42,7 @@ export const OtpVerificationFeature = ({ phone }: { phone: string }) => {
           </IconButton>
         </div>
       </div>
-      <OtpVerificationForm />
+      <OtpVerificationForm phone={phone} />
     </div>
   );
 };

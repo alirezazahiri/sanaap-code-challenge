@@ -11,6 +11,7 @@ type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
   color?: BaseColorVariant | "inherit";
   fullWidth?: boolean;
   loading?: boolean;
+  endIcon?: React.ReactNode;
 };
 
 export const Button: React.FC<ButtonProps> = ({
