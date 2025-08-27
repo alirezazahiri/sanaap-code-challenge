@@ -1,0 +1,15 @@
+.container {
+  .header {
+    text-align: center;
+    h2 {
+      margin-block-end: 8px;
+    }
+    p {
+      margin-block-end: 24px;
+    }
+  }
+
+  .continueButton {
+    margin-block-start: 24px;
+  }
+}
