@@ -3,6 +3,7 @@ import { ThemeProvider } from "@mui/material/styles";
 import localFont from "next/font/local";
 import theme from "@/theme";
 import classes from "./styles.module.css";
+import { Toaster } from "@/components/feedback";
 
 const vazirmatn = localFont({
   src: [
@@ -57,6 +58,7 @@ export const RootLayout: React.FC<React.PropsWithChildren> = ({ children }) => {
         <AppRouterCacheProvider>
           <ThemeProvider theme={theme}>
             <main className={classes.main}>{children}</main>
+            <Toaster />
           </ThemeProvider>
         </AppRouterCacheProvider>
       </body>

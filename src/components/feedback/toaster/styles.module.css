@@ -1,0 +1,39 @@
+.toast {
+  font-family: var(--font-vazirmatn);
+  font-weight: 500;
+
+  --error-bg: var(--mui-palette-error-light);
+  --error-border: var(--mui-palette-error-main);
+
+  --success-bg: var(--mui-palette-success-light);
+  --success-border: var(--mui-palette-success-main);
+
+  --warning-bg: var(--mui-palette-warning-light);
+  --warning-border: var(--mui-palette-warning-main);
+
+  --info-bg: var(--mui-palette-info-light);
+  --info-border: var(--mui-palette-info-main);
+
+  border-width: 2px !important;
+  border-style: solid;
+  border-color: var(--border-color);
+}
+
+.icon {
+  margin-left: 12px !important;
+}
+
+/* special cases */
+.errorIcon {
+  background-color: var(--mui-palette-error-main);
+  border-radius: 8px;
+  width: 28px;
+  height: 28px;
+  position: relative;
+  svg {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+}

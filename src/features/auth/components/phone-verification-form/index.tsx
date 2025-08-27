@@ -13,6 +13,7 @@ import { useRouter } from "next/navigation";
 import { PATHS } from "@/routes/paths";
 import { useActionMutation } from "@/hooks";
 import classes from "./styles.module.css";
+import { toast } from "@/components/feedback";
 
 export const PhoneVerificationForm = () => {
   const router = useRouter();
@@ -43,9 +44,10 @@ export const PhoneVerificationForm = () => {
   });
 
   const onSubmit = (data: PhoneNumberSchema) => {
+    toast.error("کد وارد شده صحیح نمی‌باشد.");
     const formData = new FormData();
     formData.append("phone", data.phone.padStart(11, "0"));
-    mutate(formData);
+    // mutate(formData);
   };
 
   return (
@@ -59,7 +61,8 @@ export const PhoneVerificationForm = () => {
         variant="contained"
         color="primary"
         size="large"
-        type="submit"
+        // type="submit"
+        onClick={() => onSubmit({ phone: "09123456789" })}
         loading={isPending}
         fullWidth
       >
