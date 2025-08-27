@@ -1,8 +1,5 @@
 import { BaseColorVariant } from "@/types/components";
-import {
-  Button as MuiButton,
-  ButtonProps as MuiButtonProps,
-} from "@mui/material";
+import { Button as MuiButton } from "@mui/material";
 
 type ButtonSize = "small" | "medium" | "large";
 type ButtonVariant = "text" | "outlined" | "contained";
@@ -13,6 +10,7 @@ type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
   variant?: ButtonVariant;
   color?: BaseColorVariant;
   fullWidth?: boolean;
+  loading?: boolean;
 };
 
 export const Button: React.FC<ButtonProps> = (props) => {

@@ -1,0 +1,1 @@
+export const PHONE_NUMBER_REGEX = /(9\d{9})/;

@@ -5,6 +5,7 @@ import { forwardRef } from "react";
 import Paper from "@mui/material/Paper";
 import InputBase, {
   type InputBaseComponentProps,
+  type InputBaseProps,
 } from "@mui/material/InputBase";
 import { Divider, Typography } from "@/components/ui";
 import classes from "./styles.module.css";
@@ -40,16 +41,22 @@ const TextMaskPhoneNumber = forwardRef<
 
 TextMaskPhoneNumber.displayName = "TextMaskPhoneNumber";
 
-interface PhoneNumberInputProps {
+interface PhoneNumberInputProps extends Omit<InputBaseProps, "error"> {
   label?: string;
-  name: string;
+  error?: string;
+  helperText?: string;
 }
+
 export const PhoneNumberInput: React.FC<PhoneNumberInputProps> = ({
   label,
   name,
+  error = "",
+  helperText = "",
+  ...props
 }) => {
+  const hasError = Boolean(error && error?.trim());
   return (
-    <>
+    <div className={classes.container} data-error={hasError}>
       {label && (
         <label htmlFor={name} className={classes.label}>
           <Typography variant="body2" component="span" color="textPrimary">
@@ -58,7 +65,9 @@ export const PhoneNumberInput: React.FC<PhoneNumberInputProps> = ({
         </label>
       )}
       <Paper component="div" className={classes.paper} elevation={0} dir="ltr">
-        <Typography color="textDisabled" className={classes.countryCode}>
+        <Typography
+          className={classes.countryCode}
+        >
           +98
         </Typography>
         <Divider className={classes.divider} orientation="vertical" />
@@ -68,8 +77,19 @@ export const PhoneNumberInput: React.FC<PhoneNumberInputProps> = ({
           inputProps={{ "aria-label": "phone number" }}
           inputComponent={TextMaskPhoneNumber}
           name={name}
+          {...props}
         />
       </Paper>
-    </>
+
+      {(hasError || !!helperText) && (
+        <Typography
+          variant="body2"
+          component="div"
+          className={classes.helperText}
+        >
+          {hasError ? error : helperText}
+        </Typography>
+      )}
+    </div>
   );
 };
