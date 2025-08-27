@@ -28,6 +28,7 @@ type TypographyProps = {
   fontSize?: number;
   className?: string;
   component?: TypographyComponent;
+  dir?: "ltr" | "rtl";
 };
 
 export const Typography: React.FC<TypographyProps> = (props) => {

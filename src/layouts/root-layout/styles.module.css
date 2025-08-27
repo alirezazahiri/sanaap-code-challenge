@@ -1,7 +1,8 @@
 .container {
-  max-width: 375px;
+  max-width: 430px;
   margin-inline: auto;
   position: relative;
+  background-color: var(--mui-palette-primary-light);
   .main {
     background-color: var(--mui-palette-background-default);
     min-height: 100vh;

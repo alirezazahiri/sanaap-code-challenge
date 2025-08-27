@@ -1,0 +1,18 @@
+.container {
+  .header {
+    text-align: center;
+    h2 {
+      margin-block-end: 8px;
+    }
+    .phone {
+      margin-block-end: 24px;
+      display: flex;
+      flex-direction: row-reverse;
+      align-items: center;
+      justify-content: center;
+      .editIcon {
+        margin-block-end: 3px;
+      }
+    }
+  }
+}

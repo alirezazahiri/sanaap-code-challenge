@@ -21,6 +21,6 @@
   .paper {
     margin: 19px 24px 0;
     border-radius: 16px;
-    padding: 24px;
+    padding: 24px 16px;
   }
 }

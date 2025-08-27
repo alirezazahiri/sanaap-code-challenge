@@ -8,11 +8,14 @@ type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
   children: React.ReactNode;
   size?: ButtonSize;
   variant?: ButtonVariant;
-  color?: BaseColorVariant;
+  color?: BaseColorVariant | "inherit";
   fullWidth?: boolean;
   loading?: boolean;
 };
 
-export const Button: React.FC<ButtonProps> = (props) => {
-  return <MuiButton {...props} />;
+export const Button: React.FC<ButtonProps> = ({
+  color = "inherit",
+  ...props
+}) => {
+  return <MuiButton {...props} color={color} />;
 };

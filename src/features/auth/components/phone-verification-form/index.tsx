@@ -37,17 +37,15 @@ export const PhoneVerificationForm = () => {
         );
       }
     },
-    onError: (error) => {
-      // TODO: toast error
-      console.log(error);
+    onError: () => {
+      toast.error("ارسال کد با خطا مواجه شد.");
     },
   });
 
   const onSubmit = (data: PhoneNumberSchema) => {
-    toast.error("کد وارد شده صحیح نمی‌باشد.");
     const formData = new FormData();
     formData.append("phone", data.phone.padStart(11, "0"));
-    // mutate(formData);
+    mutate(formData);
   };
 
   return (
@@ -61,8 +59,7 @@ export const PhoneVerificationForm = () => {
         variant="contained"
         color="primary"
         size="large"
-        // type="submit"
-        onClick={() => onSubmit({ phone: "09123456789" })}
+        type="submit"
         loading={isPending}
         fullWidth
       >

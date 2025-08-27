@@ -54,6 +54,13 @@ const theme = createTheme({
   shape: {
     borderRadius: 10,
   },
+  components: {
+    MuiTypography: {
+      defaultProps: {
+        marginBlockEnd: 0,
+      }
+    }
+  }
 });
 
 export default theme;
