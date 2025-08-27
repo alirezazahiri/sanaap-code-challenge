@@ -1,16 +1,18 @@
 "use client";
 
+import { createOtpAction } from "@/features/auth/actions";
 import { PhoneNumberInput } from "@/components/shared";
 import { Button } from "@/components/ui";
 import {
   PhoneNumberSchema,
   phoneNumberSchema,
 } from "@/features/auth/validation";
-import classes from "./styles.module.css";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 import { PATHS } from "@/routes/paths";
+import { useActionMutation } from "@/hooks";
+import classes from "./styles.module.css";
 
 export const PhoneVerificationForm = () => {
   const router = useRouter();
@@ -26,8 +28,24 @@ export const PhoneVerificationForm = () => {
     mode: "onChange",
   });
 
+  const { mutate, isPending } = useActionMutation(createOtpAction, {
+    onSuccess: (data) => {
+      if (data.success) {
+        router.push(
+          `${PATHS.AUTH.SIGNUP.OTP_VERIFICATION}?phone=${data.response!.phone}`
+        );
+      }
+    },
+    onError: (error) => {
+      // TODO: toast error
+      console.log(error);
+    },
+  });
+
   const onSubmit = (data: PhoneNumberSchema) => {
-    router.push(`${PATHS.AUTH.SIGNUP.OTP_VERIFICATION}?phone=${data.phone}`);
+    const formData = new FormData();
+    formData.append("phone", data.phone.padStart(11, "0"));
+    mutate(formData);
   };
 
   return (
@@ -41,8 +59,9 @@ export const PhoneVerificationForm = () => {
         variant="contained"
         color="primary"
         size="large"
-        fullWidth
         type="submit"
+        loading={isPending}
+        fullWidth
       >
         ادامه
       </Button>
