@@ -9,7 +9,6 @@ export const envelopeServerAction = async <T>(
     const response = await action();
     return { success: true, response };
   } catch (error) {
-    console.log("envelopeServerAction error", error);
     return {
       success: false,
       error: (error as Error).message,

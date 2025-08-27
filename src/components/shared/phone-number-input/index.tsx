@@ -18,7 +18,6 @@ const TextMaskPhoneNumber = forwardRef<
   TextMaskPhoneNumberProps
 >(({ onChange, ...props }, ref) => {
   const handleChange = (value: string) => {
-    console.log(value);
     onChange?.({
       target: { name: props.name, value },
     } as React.ChangeEvent<HTMLInputElement>);

@@ -17,17 +17,13 @@ export const httpService = axios.create({
 
 httpService.interceptors.response.use(
   (res) => {
-    console.log("http-service::res", res);
     return res;
   },
   (err) => {
     const error = err as AxiosError;
-    console.log("http-service::error", error);
     if (error?.response) {
-      console.log("http-service::error?.response", error?.response);
       const statusCode = error?.response.status;
       if (statusCode >= 400) {
-        console.log("http-service::error?.response?.data", error.response?.data);
         const errorData: ApiError = error.response?.data as ApiError;
         errorHandler[statusCode](errorData);
       }
