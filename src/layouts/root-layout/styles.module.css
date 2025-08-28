@@ -1,12 +1,12 @@
 .container {
   max-width: 430px;
+  min-height: 100vh;
   margin-inline: auto;
   position: relative;
   background-color: var(--mui-palette-primary-light);
+
   .main {
     background-color: var(--mui-palette-background-default);
-    min-height: 100vh;
-    padding-left: 16px;
-    padding-right: 16px;
+    height: 100%;
   }
 }

@@ -1,0 +1,10 @@
+.container {
+  .outterLabel {
+    display: inline-block;
+    margin-block-end: 8px;
+  }
+
+  .innerLabel {
+    background-color: var(--mui-palette-background-paper);
+  }
+}

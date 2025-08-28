@@ -1,26 +1,29 @@
 .container {
   min-height: 100vh;
+  position: relative;
+  padding-block-end: 24px;
 
   .hero {
     height: 207px;
     border-radius: 0 0 16px 16px;
     background-color: var(--mui-palette-primary-main);
-    position: absolute;
+    position: sticky;
     top: 0;
-    left: 0;
-    right: 0;
     z-index: 0;
-  }
+    padding-block-start: 20px;
 
-  .logo {
-    margin-inline: auto;
-    display: block;
-    margin-top: 20px;
+    .logo {
+      margin-inline: auto;
+      display: block;
+    }
   }
 
   .paper {
-    margin: 19px 24px 0;
+    position: relative;
+    margin-top: -110px;
+    margin-inline: 24px;
     border-radius: 16px;
     padding: 24px 16px;
+    z-index: 10;
   }
 }

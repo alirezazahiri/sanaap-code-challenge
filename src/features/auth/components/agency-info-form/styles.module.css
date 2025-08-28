@@ -1,0 +1,14 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+
+  .formRadioGroup {
+    flex-direction: row !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    div {
+      flex: 1;
+    }
+  }
+}

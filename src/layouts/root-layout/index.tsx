@@ -1,4 +1,5 @@
 import { AppRouterCacheProvider } from "@mui/material-nextjs/v15-appRouter";
+import { QueryProvider } from "@/providers";
 import { ThemeProvider } from "@mui/material/styles";
 import localFont from "next/font/local";
 import theme from "@/theme";
@@ -60,7 +61,9 @@ export const RootLayout: React.FC<React.PropsWithChildren> = ({ children }) => {
       <body className={classes.container}>
         <AppRouterCacheProvider>
           <ThemeProvider theme={theme}>
-            <main className={classes.main}>{children}</main>
+            <QueryProvider>
+              <main className={classes.main}>{children}</main>
+            </QueryProvider>
             <Toaster />
           </ThemeProvider>
         </AppRouterCacheProvider>

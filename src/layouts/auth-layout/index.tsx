@@ -13,11 +13,10 @@ export const AuthLayout: React.FC<React.PropsWithChildren> = ({ children }) => {
           width={47}
           className={classes.logo}
         />
-
-        <Paper className={classes.paper} elevation={6}>
-          {children}
-        </Paper>
       </div>
+      <Paper className={classes.paper} elevation={6}>
+        {children}
+      </Paper>
     </div>
   );
 };

@@ -75,6 +75,13 @@ const theme = createTheme({
         }
       },
     },
+    MuiSelect: {
+      defaultProps: {
+        MenuProps: {
+          disableScrollLock: true,
+        },
+      }
+    },
   },
 });
 

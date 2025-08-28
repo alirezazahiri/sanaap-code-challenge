@@ -4,6 +4,21 @@
   box-sizing: border-box;
 }
 
+/* Prevent layout shift when scrollbar appears/disappears */
+html {
+  scrollbar-gutter: stable;
+}
+
+/* Fallback for browsers that don't support scrollbar-gutter */
+body {
+  overflow-y: scroll;
+}
+
+/* Ensure scrollbar stays visible even when MUI components try to hide it */
+body {
+  overflow: auto !important;
+}
+
 :root {
   --animate-spin: spin 1s linear infinite;
 }
