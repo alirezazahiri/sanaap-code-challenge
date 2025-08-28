@@ -1,6 +1,13 @@
+import { ApiInsuranceBranch, ApiCounty, ApiProvince } from "@/models";
+import { ApiResponse } from "@/types/api";
+
 export const API_ENDPOINTS = {
-  CREATE_OTP: "/agent/verification/signup/create_otp/",
-  VALIDATE_OTP: "/agent/verification/signup/validate_otp/",
+  CREATE_OTP: "/api/v2/app/DEY/agent/verification/signup/create_otp/",
+  VALIDATE_OTP: "/api/v2/app/DEY/agent/verification/signup/validate_otp/",
+  GET_PROVINCES: "/base/provinces_wop/",
+  GET_COUNTIES: "/base/counties_wop/",
+  GET_INSURANCE_BRANCHES:
+    "/api/v2/app/selection_item/insurance_branch/wop_list/",
 } as const;
 
 export type ApiEndpointRequestBody = {
@@ -8,7 +15,19 @@ export type ApiEndpointRequestBody = {
   VALIDATE_OTP: { phone_number: string; code: string };
 };
 
+export type ApiEndpointRequestParams = {
+  GET_COUNTIES: { province: number };
+  GET_INSURANCE_BRANCHES: {
+    name?: string;
+    insurance?: string;
+    province: number;
+  };
+};
+
 export type ApiEndpointResponse = {
   CREATE_OTP: "OK" | null;
   VALIDATE_OTP: "OK" | null;
+  GET_PROVINCES: ApiProvince[];
+  GET_COUNTIES: ApiCounty[];
+  GET_INSURANCE_BRANCHES: ApiResponse<ApiInsuranceBranch[]>;
 };

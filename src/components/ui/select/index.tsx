@@ -5,29 +5,48 @@ import { forwardRef } from "react";
 
 export type SelectProps = {
   name?: string;
-  options: { label: string; value: string }[];
+  options: { label: string; value: string | number | readonly string[] }[];
   labelId?: string;
   id?: string;
-  value?: string;
-  onChange?: (event: SelectChangeEvent<string>) => void;
+  value?: string | number | readonly string[] | undefined;
+  onChange?: (
+    event: SelectChangeEvent<string | number | readonly string[]>
+  ) => void;
   label?: string;
   fullWidth?: boolean;
   loading?: boolean;
   disabled?: boolean;
+  defaultValue?: string | number | readonly string[] | undefined;
+  placeholder: string;
 };
 
 export const Select = forwardRef<HTMLSelectElement, SelectProps>(
-  ({ options, name, ...props }, ref) => {
+  (
+    {
+      options,
+      name,
+      defaultValue = 0,
+      loading,
+      disabled,
+      placeholder,
+      ...props
+    },
+    ref
+  ) => {
     return (
       <MuiSelect
         name={name}
         ref={ref}
-        disabled={props.loading || props.disabled}
-        startAdornment={props.loading ? <CircularProgress size={20} /> : null}
+        disabled={loading || disabled}
+        startAdornment={loading ? <CircularProgress size={20} /> : null}
+        defaultValue={defaultValue}
         {...props}
       >
+        <MenuItem value={0} disabled>
+          {placeholder}
+        </MenuItem>
         {options.map((option) => (
-          <MenuItem key={option.value} value={option.value}>
+          <MenuItem key={option.value.toString()} value={option.value}>
             {option.label}
           </MenuItem>
         ))}

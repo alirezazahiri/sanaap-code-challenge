@@ -29,7 +29,6 @@ export const PhoneVerificationForm = () => {
   const { mutate, isPending } = useActionMutation(createOtpAction, {
     onSuccess: (data) => {
       if (data.success) {
-        console.log("data.response", data.response);
         router.push(
           `${PATHS.AUTH.SIGNUP.OTP_VERIFICATION}?phone=${data.response!.phone}`
         );

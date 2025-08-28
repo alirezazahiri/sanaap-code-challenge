@@ -1,3 +1,4 @@
+import { prefetchProvinces } from "@/features/auth/api";
 import { AgencyInfoFeature } from "@/features/auth/pages";
 import { phoneNumberSchema, userInfoSchema } from "@/features/auth/validation";
 import { PATHS } from "@/routes/paths";
@@ -23,6 +24,8 @@ const AgencyInfoPage: React.FC<AgencyInfoPageProps> = async ({
   if (!result.success) {
     return redirect(PATHS.AUTH.SIGNUP.USER_INFO);
   }
+
+  await prefetchProvinces();
 
   return (
     <AgencyInfoFeature

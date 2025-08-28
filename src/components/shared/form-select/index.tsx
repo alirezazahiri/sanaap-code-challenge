@@ -2,12 +2,14 @@ import { Label, Select, SelectProps } from "@/components/ui";
 import { FormControl, FormHelperText, InputLabel } from "@mui/material";
 import { forwardRef } from "react";
 import classes from "./styles.module.css";
+import clsx from "clsx";
 
 export type FormSelectProps = Omit<SelectProps, "name"> & {
   helperText?: string;
   disabled?: boolean;
   loading?: boolean;
   name: string;
+  error?: string;
 };
 
 export const FormSelect = forwardRef<HTMLSelectElement, FormSelectProps>(
@@ -20,6 +22,7 @@ export const FormSelect = forwardRef<HTMLSelectElement, FormSelectProps>(
       labelId,
       helperText,
       name,
+      error,
       ...props
     },
     ref
@@ -36,7 +39,11 @@ export const FormSelect = forwardRef<HTMLSelectElement, FormSelectProps>(
             {label}
           </Label>
         )}
-        <FormControl disabled={loading || disabled} fullWidth={fullWidth}>
+        <FormControl
+          disabled={loading || disabled}
+          fullWidth={fullWidth}
+          error={!!error}
+        >
           <InputLabel className={classes.innerLabel} id={labelId}>
             {label}
           </InputLabel>
@@ -47,7 +54,7 @@ export const FormSelect = forwardRef<HTMLSelectElement, FormSelectProps>(
             disabled={loading || disabled}
             fullWidth={fullWidth}
           />
-          <FormHelperText>{helperText}</FormHelperText>
+          <FormHelperText>{error || helperText}</FormHelperText>
         </FormControl>
       </div>
     );

@@ -9,7 +9,7 @@ export const agencyInfoSchema = z
       .max(10, "کد نمایندگی نمیتواند بیشتر از 10 رقم باشد"),
     province: z.number().min(1, "استان را انتخاب کنید"),
     city: z.number().min(1, "شهر را انتخاب کنید"),
-    insuranceBranch: z.string().min(1, "شعبه بیمه‌گر را انتخاب کنید"),
+    insuranceBranch: z.number().min(1, "شعبه بیمه‌گر را انتخاب کنید"),
     cityCode: z
       .string()
       .min(1, "کد شهر را وارد کنید")
