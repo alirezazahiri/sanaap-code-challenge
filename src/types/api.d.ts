@@ -1,6 +1,4 @@
-import { API_ENDPOINTS } from "@/routes/api-endpoints";
-
-interface ApiErrorResponse {
+export type ApiErrorResponse = {
   status_code: number;
   message: string;
   is_success: boolean;

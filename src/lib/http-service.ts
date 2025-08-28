@@ -41,7 +41,7 @@ async function apiBase<T>(
   return response.data as T;
 }
 
-async function GET<T>(url: string, headers?: AxiosRequestHeaders): Promise<T> {
+async function GET<T>(url: string, headers?: AxiosRequestHeaders) {
   const options: AxiosRequestConfig = {
     headers,
     method: "GET",
@@ -54,7 +54,7 @@ async function POST<TModel, TResult>(
   url: string,
   data: TModel,
   headers?: AxiosRequestHeaders
-): Promise<TResult> {
+) {
   const options: AxiosRequestConfig = {
     headers,
     method: "POST",
@@ -67,7 +67,7 @@ async function PUT<TModel, TResult>(
   url: string,
   data: TModel,
   headers?: AxiosRequestHeaders
-): Promise<TResult> {
+) {
   const options: AxiosRequestConfig = {
     headers,
     method: "PUT",
@@ -80,7 +80,7 @@ async function PATCH<TModel, TResult>(
   url: string,
   data: TModel,
   headers?: AxiosRequestHeaders
-): Promise<TResult> {
+) {
   const options: AxiosRequestConfig = {
     headers,
     method: "PATCH",
@@ -89,10 +89,7 @@ async function PATCH<TModel, TResult>(
   return await apiBase<TResult>(url, options);
 }
 
-async function DELETE<T>(
-  url: string,
-  headers?: AxiosRequestHeaders
-): Promise<void> {
+async function DELETE(url: string, headers?: AxiosRequestHeaders) {
   const options: AxiosRequestConfig = {
     method: "DELETE",
     headers,

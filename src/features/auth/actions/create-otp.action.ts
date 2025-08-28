@@ -17,9 +17,7 @@ export const createOtpAction: Action<PhoneNumberSchema> = async (
   _model,
   formData
 ) => {
-  const op = "CREATE_OTP";
-
-  console.log("createOtpAction", formData);
+  type Op = "CREATE_OTP";
 
   const phone = formData.get("phone") as string;
 
@@ -31,8 +29,8 @@ export const createOtpAction: Action<PhoneNumberSchema> = async (
     }
 
     await POST<
-      ApiEndpointRequestBody[typeof op],
-      ApiEndpointResponse[typeof op]
+      ApiEndpointRequestBody[Op],
+      ApiEndpointResponse[Op]
     >(API_ENDPOINTS.CREATE_OTP, {
       phone_number: phone,
     });

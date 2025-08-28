@@ -17,7 +17,7 @@ export const validateOtpAction: Action<
   PhoneNumberSchema,
   { phone: string; code: string }
 > = async (_model, data) => {
-  const op = "VALIDATE_OTP";
+  type Op = "VALIDATE_OTP";
 
   const { phone, code } = data;
 
@@ -29,8 +29,8 @@ export const validateOtpAction: Action<
     }
 
     await POST<
-      ApiEndpointRequestBody[typeof op],
-      ApiEndpointResponse[typeof op]
+      ApiEndpointRequestBody[Op],
+      ApiEndpointResponse[Op]
     >(API_ENDPOINTS.VALIDATE_OTP, {
       phone_number: phone,
       code: code,

@@ -1,4 +1,4 @@
-import { BaseColorVariant, TypographyVariant } from "@/types/components";
+import type { BaseColorVariant, TypographyVariant } from "@/types/components";
 import MuiTypography from "@mui/material/Typography";
 
 type TypographyComponent =

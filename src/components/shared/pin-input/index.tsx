@@ -2,6 +2,7 @@
 
 import React, {
   forwardRef,
+  useCallback,
   useEffect,
   useImperativeHandle,
   useRef,
@@ -36,11 +37,11 @@ export const PinInput = forwardRef<PinInputRef, PinInputProps>(
       }
     }, [autoFocus]);
 
-    const sendResult = () => {
+    const sendResult = useCallback(() => {
       const result = inputsRef.current.map((input) => input.value).join("");
       onChange?.(result);
       if (result.length === length) onComplete?.(result);
-    };
+    }, [length, onChange, onComplete]);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
       const {
@@ -104,7 +105,7 @@ export const PinInput = forwardRef<PinInputRef, PinInputProps>(
           sendResult();
         },
       }),
-      []
+      [sendResult]
     );
 
     return (

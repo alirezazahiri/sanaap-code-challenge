@@ -28,10 +28,8 @@ export const useActionMutation = <T, D = FormData>(
   const [isPending, startTransition] = useTransition();
 
   useEffect(() => {
-    console.log({formState, isPending});
     if (isPending) return;
 
-    console.log("formState", formState);
     if (formState && !formState.success && formState.error) {
       onErrorRef?.(formState, formState.error);
     } else if (formState && formState.success && formState.response) {
@@ -40,9 +38,7 @@ export const useActionMutation = <T, D = FormData>(
   }, [isPending, formState, onErrorRef, onSuccessRef]);
 
   const mutate = useCallbackRef((payload: D) => {
-    console.log("mutate", payload);
     startTransition(async () => {
-      console.log("startTransition", payload);
       formAction(payload);
     });
   });

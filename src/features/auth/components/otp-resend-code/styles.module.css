@@ -1,0 +1,21 @@
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  color: var(--mui-palette-text-secondary);
+
+  .expired {
+    display: none;
+  }
+
+  .redoIcon {
+    margin-right: 10px;
+    &.disabled {
+      display: none;
+    }
+    &.loading {
+      animation: var(--animate-spin);
+    }
+  }
+}
