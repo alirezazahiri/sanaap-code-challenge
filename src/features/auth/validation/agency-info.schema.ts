@@ -10,10 +10,6 @@ export const agencyInfoSchema = z
     province: z.number().min(1, "استان را انتخاب کنید"),
     city: z.number().min(1, "شهر را انتخاب کنید"),
     insuranceBranch: z.number().min(1, "شعبه بیمه‌گر را انتخاب کنید"),
-    cityCode: z
-      .string()
-      .min(1, "کد شهر را وارد کنید")
-      .max(5, "کد شهر نمیتواند بیشتر از 5 رقم باشد"),
     telephone: z
       .string()
       .min(1, "تلفن ثابت نمایندگی را وارد کنید")
@@ -22,14 +18,17 @@ export const agencyInfoSchema = z
     // if and only if type is AgencyType.LEGAL, agencyName is required
     agencyName: z
       .string()
+      .trim()
       .min(1, "نام نمایندگی را وارد کنید")
       .max(100, "نام نمایندگی نمیتواند بیشتر از 100 کاراکتر باشد")
-      .optional(),
+      .optional()
+      .or(z.literal("")),
   })
   .refine(
     (data) => {
+      const name = data.agencyName?.trim();
       if (data.agencyType === AgencyType.LEGAL) {
-        return !!data.agencyName;
+        return !!name;
       }
       return true;
     },

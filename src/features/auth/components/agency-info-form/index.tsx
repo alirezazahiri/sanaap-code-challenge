@@ -17,6 +17,9 @@ import { LocationFields } from "@/features/auth/components/agency-location-field
 import { AgencyTypeField } from "@/features/auth/components/agency-type-field";
 import { PhoneField } from "@/features/auth/components/agency-phone-field";
 import classes from "./styles.module.css";
+import { Problem } from "@/types/http-errors";
+import { useState } from "react";
+import { toast } from "sonner";
 
 type AgencyInfoFormProps = {
   phone: string;
@@ -30,6 +33,8 @@ export const AgencyInfoForm: React.FC<AgencyInfoFormProps> = ({
   lastName,
 }) => {
   "use no memo";
+
+  const [agentCodeError, setAgentCodeError] = useState<string | null>(null);
 
   const {
     register,
@@ -45,7 +50,6 @@ export const AgencyInfoForm: React.FC<AgencyInfoFormProps> = ({
       province: 0,
       city: 0,
       insuranceBranch: 0,
-      cityCode: "",
       telephone: "",
       agencyType: AgencyType.REAL,
       agencyName: "",
@@ -55,6 +59,7 @@ export const AgencyInfoForm: React.FC<AgencyInfoFormProps> = ({
 
   const selectedProvince = watch("province");
   const selectedAgencyType = watch("agencyType");
+  watch("agentCode");
 
   const {
     mutate: checkAgentCode,
@@ -72,7 +77,21 @@ export const AgencyInfoForm: React.FC<AgencyInfoFormProps> = ({
 
   const handleAgentCodeValidation = (code: string) => {
     setValue("agentCode", code);
-    checkAgentCode({ agent_code: code });
+
+    setAgentCodeError(null);
+
+    checkAgentCode(
+      { agent_code: code },
+      {
+        onError: (err) => {
+          const error = err as unknown as Problem;
+          setAgentCodeError(error.detail || "خطا در تأیید کد نمایندگی");
+        },
+        onSuccess: () => {
+          setAgentCodeError(null);
+        },
+      }
+    );
   };
 
   const handlePhoneChange = (value: string) => {
@@ -84,14 +103,27 @@ export const AgencyInfoForm: React.FC<AgencyInfoFormProps> = ({
   };
 
   const onSubmit = (data: AgencyInfoSchema) => {
+    if (agentCodeError) {
+      toast.error("کد نمایندگی معتبر نیست");
+      return;
+    }
+
+    if (!isAgentCodeValid) {
+      setAgentCodeError("لطفاً کد نمایندگی را تأیید کنید");
+      return;
+    }
+
     console.log("submit data:", data);
+    // TODO: submit form using server actions and get the access/refresh tokens
   };
+
+  console.log("errors", errors);
 
   return (
     <form className={classes.form} onSubmit={handleSubmit(onSubmit)}>
       <AgentCodeField
         register={register}
-        error={errors.agentCode?.message}
+        error={agentCodeError || errors.agentCode?.message}
         onValidate={handleAgentCodeValidation}
         isValidating={isCheckingAgentCode}
         isValid={isAgentCodeValid}
