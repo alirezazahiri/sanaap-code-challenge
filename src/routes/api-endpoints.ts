@@ -8,11 +8,14 @@ export const API_ENDPOINTS = {
   GET_COUNTIES: "/base/counties_wop/",
   GET_INSURANCE_BRANCHES:
     "/api/v2/app/selection_item/insurance_branch/wop_list/",
+  CHECK_AGENT_CODE:
+    "/api/v2/app/DEY/agent/verification/signup/check_agency_code/",
 } as const;
 
 export type ApiEndpointRequestBody = {
   CREATE_OTP: { phone_number: string };
   VALIDATE_OTP: { phone_number: string; code: string };
+  CHECK_AGENT_CODE: { agent_code: string };
 };
 
 export type ApiEndpointRequestParams = {
@@ -30,4 +33,5 @@ export type ApiEndpointResponse = {
   GET_PROVINCES: ApiProvince[];
   GET_COUNTIES: ApiCounty[];
   GET_INSURANCE_BRANCHES: ApiResponse<ApiInsuranceBranch[]>;
+  CHECK_AGENT_CODE: "OK" | null;
 };

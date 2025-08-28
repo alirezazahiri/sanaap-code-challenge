@@ -1,5 +1,6 @@
 import { BaseColorVariant } from "@/types/components";
-import InputAdornment  from "@mui/material/InputAdornment";
+import CircularProgress from "@mui/material/CircularProgress";
+import InputAdornment from "@mui/material/InputAdornment";
 import TextField from "@mui/material/TextField";
 import { forwardRef } from "react";
 
@@ -20,17 +21,18 @@ export type TextInputProps = Omit<
   helperText?: string;
   startAdornment?: React.ReactNode;
   endAdornment?: React.ReactNode;
+  loading?: boolean;
 };
 
 type SlotProps = {
   input: {
     startAdornment?: React.ReactNode;
     endAdornment?: React.ReactNode;
-  }
-}
+  };
+};
 
 const getSlotProps = (
-  slotProps: Pick<TextInputProps, "startAdornment" | "endAdornment">
+  slotProps: Pick<TextInputProps, "startAdornment" | "endAdornment" | "loading">
 ) => {
   const result: SlotProps = {
     input: {
@@ -40,22 +42,30 @@ const getSlotProps = (
   };
   if (slotProps.startAdornment) {
     result.input.startAdornment = (
-        <InputAdornment position="start">{slotProps.startAdornment}</InputAdornment>
+      <InputAdornment position="start">
+        {slotProps.startAdornment}
+      </InputAdornment>
     );
   }
-  if (slotProps.endAdornment) {
+  if (slotProps.endAdornment || slotProps.loading) {
     result.input.endAdornment = (
-        <InputAdornment position="end">{slotProps.endAdornment}</InputAdornment>
-        );
-      
+      <InputAdornment position="end">
+        {slotProps.loading ? (
+          <CircularProgress size={20} />
+        ) : (
+          slotProps.endAdornment
+        )}
+      </InputAdornment>
+    );
   }
-  return result.input.startAdornment || result.input.endAdornment ? result : undefined;
-
+  return result.input.startAdornment || result.input.endAdornment
+    ? result
+    : undefined;
 };
 
 export const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
-  ({ startAdornment, endAdornment, ...props }, ref) => {
-    const slotProps = getSlotProps({ startAdornment, endAdornment });
+  ({ startAdornment, endAdornment, loading, ...props }, ref) => {
+    const slotProps = getSlotProps({ startAdornment, endAdornment, loading });
     return <TextField {...props} inputRef={ref} slotProps={slotProps} />;
   }
 );

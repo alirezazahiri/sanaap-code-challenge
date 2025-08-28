@@ -4,7 +4,7 @@ import MuiRadioGroup from "@mui/material/RadioGroup";
 import { forwardRef } from "react";
 
 export type RadioGroupProps = {
-  options: { label: string; value: string }[];
+  options: { label: string; value: string | number | readonly string[] }[];
   value?: string;
   onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
   labelId?: string;
@@ -38,7 +38,7 @@ export const RadioGroup = forwardRef<HTMLDivElement, RadioGroupProps>(
       >
         {options.map((option) => (
           <FormControlLabel
-            key={option.value}
+            key={option.value.toString()}
             value={option.value}
             control={<Radio />}
             label={option.label}

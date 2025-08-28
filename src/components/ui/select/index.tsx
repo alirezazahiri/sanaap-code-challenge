@@ -2,6 +2,7 @@ import MuiSelect, { type SelectChangeEvent } from "@mui/material/Select";
 import CircularProgress from "@mui/material/CircularProgress";
 import MenuItem from "@mui/material/MenuItem";
 import { forwardRef } from "react";
+import { InputAdornment } from "@mui/material";
 
 export type SelectProps = {
   name?: string;
@@ -38,7 +39,13 @@ export const Select = forwardRef<HTMLSelectElement, SelectProps>(
         name={name}
         ref={ref}
         disabled={loading || disabled}
-        startAdornment={loading ? <CircularProgress size={20} /> : null}
+        startAdornment={
+          loading ? (
+            <InputAdornment position="start">
+              <CircularProgress size={20} />
+            </InputAdornment>
+          ) : null
+        }
         defaultValue={defaultValue}
         {...props}
       >

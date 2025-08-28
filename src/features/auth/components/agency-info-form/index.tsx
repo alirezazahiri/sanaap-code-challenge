@@ -1,23 +1,22 @@
 "use client";
 
-import {
-  FormRadioGroup,
-  FormSelect,
-  FormTextInput,
-  PhoneNumberInput,
-} from "@/components/shared";
+import { FormTextInput } from "@/components/shared";
 import { Button } from "@/components/ui";
 import { AgencyType } from "@/enums/agency-type.enum";
-import classes from "./styles.module.css";
 import {
+  useCheckAgentCode,
   useGetCounties,
   useGetInsuranceBranches,
   useGetProvinces,
 } from "@/features/auth/api";
-import { Controller, ControllerRenderProps, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { agencyInfoSchema, AgencyInfoSchema } from "@/features/auth/validation";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { unmaskPhoneNumber } from "@/lib/phone-number";
+import { AgentCodeField } from "@/features/auth/components/agent-code-field";
+import { LocationFields } from "@/features/auth/components/agency-location-fields";
+import { AgencyTypeField } from "@/features/auth/components/agency-type-field";
+import { PhoneField } from "@/features/auth/components/agency-phone-field";
+import classes from "./styles.module.css";
 
 type AgencyInfoFormProps = {
   phone: string;
@@ -30,13 +29,16 @@ export const AgencyInfoForm: React.FC<AgencyInfoFormProps> = ({
   firstName,
   lastName,
 }) => {
+  "use no memo";
+
   const {
     register,
     handleSubmit,
     watch,
     control,
+    setValue,
     formState: { errors },
-  } = useForm({
+  } = useForm<AgencyInfoSchema>({
     resolver: zodResolver(agencyInfoSchema),
     defaultValues: {
       agentCode: "",
@@ -51,118 +53,80 @@ export const AgencyInfoForm: React.FC<AgencyInfoFormProps> = ({
     mode: "onChange",
   });
 
-  const province = watch("province");
+  const selectedProvince = watch("province");
+  const selectedAgencyType = watch("agencyType");
+
+  const {
+    mutate: checkAgentCode,
+    isPending: isCheckingAgentCode,
+    isSuccess: isAgentCodeValid,
+  } = useCheckAgentCode();
 
   const { data: provinces = [] } = useGetProvinces();
-  const provincesOptions = [...provinces].map((province) => ({
-    label: province.name,
-    value: province.id,
-  }));
-
-  const { data: counties = [] } = useGetCounties({ province });
-  const countiesOptions = [...counties].map((county) => ({
-    label: county.name,
-    value: county.id,
-  }));
-
-  const { data: insuranceBranches = [] } = useGetInsuranceBranches({
-    province,
+  const { data: counties = [] } = useGetCounties({
+    province: selectedProvince,
   });
-  const insuranceBranchesOptions = [...insuranceBranches].map((branch) => ({
-    label: branch.name,
-    value: branch.id,
-  }));
+  const { data: insuranceBranches = [] } = useGetInsuranceBranches({
+    province: selectedProvince,
+  });
 
-  const agencyTypeOptions = [
-    { label: "حقیقی", value: AgencyType.REAL },
-    { label: "حقوقی", value: AgencyType.LEGAL },
-  ];
-
-  const onSubmit = (data: AgencyInfoSchema) => {
-    console.log(data);
+  const handleAgentCodeValidation = (code: string) => {
+    setValue("agentCode", code);
+    checkAgentCode({ agent_code: code });
   };
 
-  const handleChangePhoneNumber = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
-    field: ControllerRenderProps<AgencyInfoSchema, "telephone">
-  ) => {
-    const unmaskedValue = unmaskPhoneNumber(e.target.value);
-    field.onChange({
-      target: { name: field.name, value: unmaskedValue },
-    });
+  const handlePhoneChange = (value: string) => {
+    setValue("telephone", value);
+  };
+
+  const handleAgencyTypeChange = (type: AgencyType) => {
+    setValue("agencyType", type);
+  };
+
+  const onSubmit = (data: AgencyInfoSchema) => {
+    console.log("submit data:", data);
   };
 
   return (
     <form className={classes.form} onSubmit={handleSubmit(onSubmit)}>
-      {/* TODO: API call to check if the agent code is valid */}
-      <FormTextInput
-        placeholder="کد نمایندگی را وارد کنید"
-        label="کد نمایندگی"
-        {...register("agentCode")}
+      <AgentCodeField
+        register={register}
         error={errors.agentCode?.message}
-        dir="ltr"
-        fullWidth
-      />
-      <FormSelect
-        placeholder="استان را انتخاب کنید"
-        {...register("province")}
-        options={provincesOptions}
-        error={errors.province?.message}
-        label="استان"
-        defaultValue={0}
-        fullWidth
-      />
-      <FormSelect
-        placeholder="شهر را انتخاب کنید"
-        {...register("city", {
-          disabled: !province,
-        })}
-        options={countiesOptions}
-        error={errors.city?.message}
-        label="شهر"
-        defaultValue={0}
-        fullWidth
+        onValidate={handleAgentCodeValidation}
+        isValidating={isCheckingAgentCode}
+        isValid={isAgentCodeValid}
       />
 
-      {/* TODO: this should be an autocomplete input  */}
-      <FormSelect
-        placeholder="شعبه بیمه‌گر را انتخاب کنید"
-        {...register("insuranceBranch", {
-          disabled: !province,
-        })}
-        options={insuranceBranchesOptions}
-        error={errors.insuranceBranch?.message}
-        label="شعبه بیمه‌گر"
-        fullWidth
-        defaultValue={0}
+      <LocationFields
+        register={register}
+        errors={errors}
+        selectedProvince={selectedProvince}
+        provinces={provinces}
+        counties={counties}
+        insuranceBranches={insuranceBranches}
       />
 
-      {/* TODO: prefix and mask should be dynamic based on the province */}
-      <Controller
-        name="telephone"
+      <PhoneField
         control={control}
-        render={({ field, fieldState: { error } }) => {
-          return (
-            <PhoneNumberInput
-              prefix="021"
-              mask="0000 - 0000"
-              label="تلفن ثابت"
-              name={field.name}
-              onChange={(e) => handleChangePhoneNumber(e, field)}
-              error={error?.message}
-            />
-          );
-        }}
+        error={errors.telephone?.message}
+        onPhoneChange={handlePhoneChange}
       />
 
-      <FormRadioGroup
-        label="نوع نمایندگی"
-        {...register("agencyType")}
-        className={classes.formRadioGroup}
-        options={agencyTypeOptions}
-        defaultValue={AgencyType.REAL}
-        fullWidth
+      <AgencyTypeField
+        register={register}
+        selectedType={selectedAgencyType}
+        onTypeChange={handleAgencyTypeChange}
       />
+
+      {selectedAgencyType === AgencyType.LEGAL && (
+        <FormTextInput
+          placeholder="نام نمایندگی را وارد کنید"
+          label="نام نمایندگی"
+          {...register("agencyName")}
+          error={errors.agencyName?.message}
+          fullWidth
+        />
+      )}
 
       <Button
         variant="contained"

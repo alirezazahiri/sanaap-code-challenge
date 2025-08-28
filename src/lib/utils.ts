@@ -5,3 +5,12 @@ export const secondsToMMSS = (totalSeconds: number): string => {
     .toString()
     .padStart(2, "0")}`;
 };
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export const debounce = (func: (...args: any[]) => void, delay: number) => {
+  let timeout: NodeJS.Timeout;
+  return (...args: Parameters<typeof func>) => {
+    clearTimeout(timeout);
+    timeout = setTimeout(() => func(...args), delay);
+  };
+};
