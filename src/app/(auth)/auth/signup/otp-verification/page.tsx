@@ -10,11 +10,7 @@ type OtpVerificationPageProps = {
 const OtpVerificationPage: React.FC<OtpVerificationPageProps> = async ({
   searchParams,
 }) => {
-  const { phone } = await searchParams;
-
-  if (!phone) {
-    return redirect(PATHS.AUTH.SIGNUP.PHONE_VERIFICATION);
-  }
+  const { phone = "" } = await searchParams;
 
   const result = await phoneNumberSchema.safeParseAsync({
     phone: phone.slice(1),

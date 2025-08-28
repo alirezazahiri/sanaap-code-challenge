@@ -1,5 +1,9 @@
 import { UserInfoForm } from "@/features/auth/components";
 
-export const UserInfoPage = () => {
-  return <UserInfoForm />;
+type UserInfoFeatureProps = {
+  phone: string;
+};
+
+export const UserInfoFeature: React.FC<UserInfoFeatureProps> = ({ phone }) => {
+  return <UserInfoForm phone={phone} />;
 };

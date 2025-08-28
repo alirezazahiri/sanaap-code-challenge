@@ -9,4 +9,4 @@ export const PATHS = {
       AGENCY_INFO: "/auth/signup/agency-info",
     },
   },
-};
+} as const;

@@ -12,7 +12,11 @@ import { FormTextInput } from "@/components/shared";
 import { useRouter } from "next/navigation";
 import { PATHS } from "@/routes/paths";
 
-export const UserInfoForm = () => {
+type UserInfoFormProps = {
+  phone: string;
+};
+
+export const UserInfoForm: React.FC<UserInfoFormProps> = ({ phone }) => {
   const router = useRouter();
   const {
     register,
@@ -31,6 +35,7 @@ export const UserInfoForm = () => {
     const queryParams = new URLSearchParams();
     queryParams.set("firstName", firstName);
     queryParams.set("lastName", lastName);
+    queryParams.set("phone", phone);
     router.push(`${PATHS.AUTH.SIGNUP.AGENCY_INFO}?${queryParams.toString()}`);
   };
 

@@ -28,7 +28,9 @@ export const OtpVerificationForm: React.FC<OtpVerificationFormProps> = ({
       validateOtpAction,
       {
         onSuccess: () => {
-          router.push(PATHS.AUTH.SIGNUP.USER_INFO);
+          const searchParams = new URLSearchParams();
+          searchParams.set("phone", phone);
+          router.push(`${PATHS.AUTH.SIGNUP.USER_INFO}?${searchParams.toString()}`);
         },
         onError: () => {
           setError(true);
