@@ -58,9 +58,17 @@ const theme = createTheme({
     MuiTypography: {
       defaultProps: {
         marginBlockEnd: 0,
-      }
-    }
-  }
+      },
+    },
+    MuiButton: {
+      styleOverrides: {
+        sizeLarge: {
+          height: 48,
+          fontSize: 18,
+        },
+      },
+    },
+  },
 });
 
 export default theme;

@@ -9,6 +9,7 @@ import InputBase, {
 } from "@mui/material/InputBase";
 import { Divider, Label, Typography } from "@/components/ui";
 import classes from "./styles.module.css";
+import { unmaskPhoneNumber } from "@/lib/phone-number";
 
 interface TextMaskPhoneNumberProps extends InputBaseComponentProps {
   name: string;
@@ -19,7 +20,7 @@ const TextMaskPhoneNumber = forwardRef<
 >(({ onChange, ...props }, ref) => {
   const handleChange = (value: string) => {
     onChange?.({
-      target: { name: props.name, value },
+      target: { name: props.name, value: unmaskPhoneNumber(value) },
     } as React.ChangeEvent<HTMLInputElement>);
   };
 
@@ -32,8 +33,6 @@ const TextMaskPhoneNumber = forwardRef<
       }}
       inputRef={ref}
       onAccept={handleChange}
-      overwrite
-      unmask
     />
   );
 });
@@ -41,16 +40,20 @@ const TextMaskPhoneNumber = forwardRef<
 TextMaskPhoneNumber.displayName = "TextMaskPhoneNumber";
 
 type PhoneNumberInputProps =
-  | { error?: string; helperText?: string } & (
-      | (Omit<InputBaseProps, "error" | "name"> & {
-          label: string;
-          name: string;
-        })
-      | {
-          label?: undefined;
-          name?: string;
-        }
-    );
+  | ({ error?: string; helperText?: string } & Omit<
+      InputBaseProps,
+      "error" | "name"
+    >) &
+      (
+        | {
+            label: string;
+            name: string;
+          }
+        | {
+            label?: undefined;
+            name?: string;
+          }
+      );
 
 export const PhoneNumberInput: React.FC<PhoneNumberInputProps> = ({
   label,
@@ -63,7 +66,12 @@ export const PhoneNumberInput: React.FC<PhoneNumberInputProps> = ({
   return (
     <div className={classes.container} data-error={hasError}>
       {label && (
-        <Label name={name} variant="body2" color="textPrimary" className={classes.label}>
+        <Label
+          name={name}
+          variant="body2"
+          color="textPrimary"
+          className={classes.label}
+        >
           {label}
         </Label>
       )}
@@ -73,6 +81,7 @@ export const PhoneNumberInput: React.FC<PhoneNumberInputProps> = ({
         <InputBase
           className={classes.input}
           placeholder="XXX - XXX - XXXX"
+          type="tel"
           inputProps={{ "aria-label": "phone number" }}
           inputComponent={TextMaskPhoneNumber}
           name={name}
