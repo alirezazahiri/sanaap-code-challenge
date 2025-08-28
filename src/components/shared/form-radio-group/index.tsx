@@ -25,3 +25,5 @@ export const FormRadioGroup = forwardRef<HTMLDivElement, FormRadioGroupProps>(
     );
   }
 );
+
+FormRadioGroup.displayName = "FormRadioGroup";

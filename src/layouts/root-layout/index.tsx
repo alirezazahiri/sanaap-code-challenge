@@ -2,6 +2,7 @@ import { AppRouterCacheProvider } from "@mui/material-nextjs/v15-appRouter";
 import { QueryProvider } from "@/providers";
 import { ThemeProvider } from "@mui/material/styles";
 import localFont from "next/font/local";
+import Head from "next/head";
 import theme from "@/theme";
 import classes from "./styles.module.css";
 import { Toaster } from "@/components/feedback";
@@ -55,9 +56,9 @@ const vazirmatn = localFont({
 export const RootLayout: React.FC<React.PropsWithChildren> = ({ children }) => {
   return (
     <html lang="fa" dir="rtl" className={vazirmatn.variable}>
-      <head>
+      <Head>
         <meta name="apple-mobile-web-app-title" content="Sanaap" />
-      </head>
+      </Head>
       <body className={classes.container}>
         <AppRouterCacheProvider>
           <ThemeProvider theme={theme}>

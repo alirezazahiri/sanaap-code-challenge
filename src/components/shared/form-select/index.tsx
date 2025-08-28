@@ -2,7 +2,6 @@ import { Label, Select, SelectProps } from "@/components/ui";
 import { FormControl, FormHelperText, InputLabel } from "@mui/material";
 import { forwardRef } from "react";
 import classes from "./styles.module.css";
-import clsx from "clsx";
 
 export type FormSelectProps = Omit<SelectProps, "name"> & {
   helperText?: string;
@@ -60,3 +59,5 @@ export const FormSelect = forwardRef<HTMLSelectElement, FormSelectProps>(
     );
   }
 );
+
+FormSelect.displayName = "FormSelect";
