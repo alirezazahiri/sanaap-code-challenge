@@ -20,7 +20,7 @@ type TypographyColor =
 
 type TypographyFontWeight = 100 | 200 | 300 | 400 | 500 | 600 | 700 | 800 | 900;
 
-type TypographyProps = {
+export type TypographyProps = {
   children: React.ReactNode;
   variant?: TypographyVariant;
   color?: TypographyColor;

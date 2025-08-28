@@ -1,3 +1,3 @@
-import { PhoneVerificationFeature } from "@/features/auth/pages/phone-verification";
+import { UserInfoPage } from "@/features/auth/pages";
 
-export default PhoneVerificationFeature;
+export default UserInfoPage;

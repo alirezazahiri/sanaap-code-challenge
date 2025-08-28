@@ -9,6 +9,7 @@ export type TextInputProps = Omit<
   React.InputHTMLAttributes<HTMLInputElement>,
   "size"
 > & {
+  label?: string;
   variant?: TextInputVariant;
   fullWidth?: boolean;
   size?: TextInputSize;

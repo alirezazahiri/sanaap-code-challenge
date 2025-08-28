@@ -1,0 +1,13 @@
+.container {
+  .label {
+    display: inline-block;
+    margin-block-end: 8px;
+  }
+  .error {
+    color: var(--mui-palette-error-main);
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 16px;
+    margin-top: 4px;
+  }
+}
