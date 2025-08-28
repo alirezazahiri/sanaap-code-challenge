@@ -68,6 +68,13 @@ const theme = createTheme({
         },
       },
     },
+    MuiInputBase: {
+      styleOverrides: {
+        input: {
+          fontSize: 16,
+        }
+      },
+    },
   },
 });
 

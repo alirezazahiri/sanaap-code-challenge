@@ -10,10 +10,6 @@
     align-items: center;
     border: 1px solid var(--mui-palette-divider);
 
-    * {
-      font-size: 14px !important;
-    }
-
     .countryCode {
       margin-left: 12px;
       color: var(--mui-palette-text-secondary);

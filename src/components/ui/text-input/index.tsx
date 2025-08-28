@@ -17,11 +17,26 @@ export type TextInputProps = Omit<
   disabled?: boolean;
   error?: boolean;
   helperText?: string;
+  startAdornment?: React.ReactNode;
+};
+
+const getSlotProps = ({
+  startAdornment,
+}: Pick<TextInputProps, "startAdornment">) => {
+  return startAdornment
+    ? {
+        input: {
+          startAdornment,
+        },
+      }
+    : {};
 };
 
 export const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
-  (props, ref) => {
-    return <TextField {...props} inputRef={ref} />;
+  ({ startAdornment, ...props }, ref) => {
+    const slotProps = getSlotProps({ startAdornment });
+
+    return <TextField {...props} inputRef={ref} {...slotProps} />;
   }
 );
 

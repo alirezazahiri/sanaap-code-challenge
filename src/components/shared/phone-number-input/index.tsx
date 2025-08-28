@@ -13,11 +13,12 @@ import { unmaskPhoneNumber } from "@/lib/phone-number";
 
 interface TextMaskPhoneNumberProps extends InputBaseComponentProps {
   name: string;
+  mask: string;
 }
 const TextMaskPhoneNumber = forwardRef<
   HTMLInputElement,
   TextMaskPhoneNumberProps
->(({ onChange, ...props }, ref) => {
+>(({ onChange, mask, ...props }, ref) => {
   const handleChange = (value: string) => {
     onChange?.({
       target: { name: props.name, value: unmaskPhoneNumber(value) },
@@ -27,7 +28,7 @@ const TextMaskPhoneNumber = forwardRef<
   return (
     <IMaskInput
       {...props}
-      mask="000 - 000 - 0000"
+      mask={mask}
       definitions={{
         "#": /[1-9]/,
       }}
@@ -39,11 +40,15 @@ const TextMaskPhoneNumber = forwardRef<
 
 TextMaskPhoneNumber.displayName = "TextMaskPhoneNumber";
 
+type BaseProps = {
+  error?: string;
+  helperText?: string;
+  mask?: string;
+  prefix?: string;
+} & Omit<InputBaseProps, "error" | "name">;
+
 type PhoneNumberInputProps =
-  | ({ error?: string; helperText?: string } & Omit<
-      InputBaseProps,
-      "error" | "name"
-    >) &
+  | BaseProps &
       (
         | {
             label: string;
@@ -60,6 +65,8 @@ export const PhoneNumberInput: React.FC<PhoneNumberInputProps> = ({
   name,
   error = "",
   helperText = "",
+  mask = "000 - 000 - 0000",
+  prefix = "+98",
   ...props
 }) => {
   const hasError = Boolean(error && error?.trim());
@@ -76,14 +83,17 @@ export const PhoneNumberInput: React.FC<PhoneNumberInputProps> = ({
         </Label>
       )}
       <Paper component="div" className={classes.paper} elevation={0} dir="ltr">
-        <Typography className={classes.countryCode}>+98</Typography>
+        <Typography className={classes.countryCode}>{prefix}</Typography>
         <Divider className={classes.divider} orientation="vertical" />
         <InputBase
+          data-mask={mask}
           className={classes.input}
-          placeholder="XXX - XXX - XXXX"
+          placeholder={mask.replace(/0/g, "X")}
           type="tel"
           inputProps={{ "aria-label": "phone number" }}
-          inputComponent={TextMaskPhoneNumber}
+          inputComponent={(props) => (
+            <TextMaskPhoneNumber {...props} mask={mask} />
+          )}
           name={name}
           {...props}
         />

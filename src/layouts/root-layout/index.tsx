@@ -54,6 +54,9 @@ const vazirmatn = localFont({
 export const RootLayout: React.FC<React.PropsWithChildren> = ({ children }) => {
   return (
     <html lang="fa" dir="rtl" className={vazirmatn.variable}>
+      <head>
+        <meta name="apple-mobile-web-app-title" content="Sanaap" />
+      </head>
       <body className={classes.container}>
         <AppRouterCacheProvider>
           <ThemeProvider theme={theme}>

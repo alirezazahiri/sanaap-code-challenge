@@ -1,4 +1,4 @@
-// import { AgencyInfoForm } from "@/features/auth/components";
+import { AgencyInfoForm } from "@/features/auth/components";
 
 type AgencyInfoFeatureProps = {
   phone: string;
@@ -11,6 +11,7 @@ export const AgencyInfoFeature: React.FC<AgencyInfoFeatureProps> = ({
   firstName,
   lastName,
 }) => {
-  return <div>AgencyInfoFeature {firstName} {lastName} {phone}</div>;
-  // return <AgencyInfoForm phone={phone} />;
+  return (
+    <AgencyInfoForm phone={phone} firstName={firstName} lastName={lastName} />
+  );
 };
