@@ -21,7 +21,7 @@ export const agencyInfoSchema = z
       .trim()
       .min(1, "نام نمایندگی را وارد کنید")
       .max(100, "نام نمایندگی نمیتواند بیشتر از 100 کاراکتر باشد")
-      .optional()
+      .nullable()
       .or(z.literal("")),
   })
   .refine(

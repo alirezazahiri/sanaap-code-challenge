@@ -2,7 +2,7 @@ export type ApiResponse<T> = {
   status_code: number;
   message: string;
   is_success: boolean;
-  response?: T;
+  response: T;
   error_details?: {
     type: string;
     code: string;
@@ -14,5 +14,5 @@ export type ApiResponse<T> = {
 
 export type ApiErrorResponse = Omit<
   Required<ApiResponse<null>>,
-  "is_success"
-> & { is_success: false };
+  "is_success" | "response"
+> & { is_success: false, response: null };

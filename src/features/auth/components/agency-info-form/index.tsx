@@ -20,6 +20,8 @@ import classes from "./styles.module.css";
 import { Problem } from "@/types/http-errors";
 import { useState } from "react";
 import { toast } from "sonner";
+import { useActionMutation } from "@/hooks";
+import { signUpAction } from "../../actions";
 
 type AgencyInfoFormProps = {
   phone: string;
@@ -33,6 +35,20 @@ export const AgencyInfoForm: React.FC<AgencyInfoFormProps> = ({
   lastName,
 }) => {
   "use no memo";
+
+  const {
+    mutate: signUp,
+    isPending: isSigningUp,
+    data: signUpData,
+  } = useActionMutation(signUpAction, {
+    onSuccess: (data) => {
+      console.log("data", data);
+      // TODO: navigate to the next step
+    },
+    onError: (_, error) => {
+      toast.error(error);
+    },
+  });
 
   const [agentCodeError, setAgentCodeError] = useState<string | null>(null);
 
@@ -113,11 +129,13 @@ export const AgencyInfoForm: React.FC<AgencyInfoFormProps> = ({
       return;
     }
 
-    console.log("submit data:", data);
-    // TODO: submit form using server actions and get the access/refresh tokens
+    signUp({
+      ...data,
+      firstName,
+      lastName,
+      phone,
+    });
   };
-
-  console.log("errors", errors);
 
   return (
     <form className={classes.form} onSubmit={handleSubmit(onSubmit)}>
@@ -166,6 +184,7 @@ export const AgencyInfoForm: React.FC<AgencyInfoFormProps> = ({
         size="large"
         type="submit"
         fullWidth
+        loading={isSigningUp}
       >
         ادامه
       </Button>

@@ -1,0 +1,19 @@
+.container {
+  position: relative;
+  max-width: 430px;
+  overflow: clip;
+  min-height: 100vh;
+  background-color: var(--mui-palette-primary-main);
+
+  .circles1 {
+    position: absolute;
+    right: -200px;
+  }
+
+  .circles2 {
+    position: absolute;
+    top: 80px;
+    inset-inline: 0;
+    width: 100%;
+  }
+}
