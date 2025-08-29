@@ -22,6 +22,8 @@ import { useState } from "react";
 import { toast } from "sonner";
 import { useActionMutation } from "@/hooks";
 import { signUpAction } from "../../actions";
+import { PATHS } from "@/routes/paths";
+import { useRouter } from "next/navigation";
 
 type AgencyInfoFormProps = {
   phone: string;
@@ -36,19 +38,19 @@ export const AgencyInfoForm: React.FC<AgencyInfoFormProps> = ({
 }) => {
   "use no memo";
 
-  const {
-    mutate: signUp,
-    isPending: isSigningUp,
-    data: signUpData,
-  } = useActionMutation(signUpAction, {
-    onSuccess: (data) => {
-      console.log("data", data);
-      // TODO: navigate to the next step
-    },
-    onError: (_, error) => {
-      toast.error(error);
-    },
-  });
+  const router = useRouter();
+
+  const { mutate: signUp, isPending: isSigningUp } = useActionMutation(
+    signUpAction,
+    {
+      onSuccess: (data) => {
+        router.push(PATHS.USER_STATUS);
+      },
+      onError: (_, error) => {
+        toast.error(error);
+      },
+    }
+  );
 
   const [agentCodeError, setAgentCodeError] = useState<string | null>(null);
 

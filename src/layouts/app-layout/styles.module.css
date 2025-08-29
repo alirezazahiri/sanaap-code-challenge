@@ -1,6 +1,6 @@
 .container {
   position: relative;
-  max-width: 430px;
+  max-width: 100%;
   overflow: clip;
   min-height: 100vh;
   background-color: var(--mui-palette-primary-main);

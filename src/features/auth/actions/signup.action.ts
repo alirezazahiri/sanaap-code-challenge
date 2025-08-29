@@ -3,6 +3,7 @@
 import { signUpSchema, SignUpSchema } from "@/features/auth/validation";
 import { POST } from "@/lib/http-service";
 import { envelopeServerAction } from "@/lib/server-action";
+import { setSession } from "@/lib/set-session";
 import {
   API_ENDPOINTS,
   ApiEndpointRequestBody,
@@ -52,6 +53,8 @@ export const signUpAction: Action<ActionState, SignUpSchema> = async (
       ApiEndpointRequestBody[Op],
       ApiEndpointResponse[Op]
     >(API_ENDPOINTS.SIGNUP, requestBody);
+
+    await setSession(response.access, response.refresh);
 
     return {
       accessToken: response.access,

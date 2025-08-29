@@ -9,4 +9,6 @@ export const PATHS = {
       AGENCY_INFO: "/auth/signup/agency-info",
     },
   },
+  WELCOME: "/welcome",
+  USER_STATUS: "/user-status",
 } as const;

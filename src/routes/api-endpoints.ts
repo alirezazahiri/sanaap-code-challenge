@@ -53,5 +53,5 @@ export type ApiEndpointResponse = {
   GET_INSURANCE_BRANCHES: ApiResponse<ApiInsuranceBranch[]>;
   CHECK_AGENT_CODE: "OK" | null;
   SIGNUP: ApiResponse<{ refresh: string; access: string }>;
-  CHECK_USER_STATUS: ApiUserStatus;
+  CHECK_USER_STATUS: ApiResponse<ApiUserStatus>;
 };
