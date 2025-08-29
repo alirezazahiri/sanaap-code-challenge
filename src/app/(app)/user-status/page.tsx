@@ -1,3 +1,3 @@
-export default function UserStatusPage() {
-  return <div>UserStatusPage</div>;
-}
+import { UserStatusFeature } from "@/features/user-status";
+
+export default UserStatusFeature;

@@ -1,3 +1,3 @@
-export default function WelcomePage() {
-  return <div>WelcomePage</div>;
-}
+import { WelcomeFeature } from "@/features/welcome";
+
+export default WelcomeFeature;
